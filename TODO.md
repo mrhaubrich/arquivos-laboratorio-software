@@ -48,6 +48,9 @@
    4. Dado que os dados de clientes e pagamentos estão corretos, a funcionalidade deve printar os clientes e suas dívidas.
 
 # Sprint
+0. Implementar testes de aceitação
+   - Complexidade 3
+   - TED: 2 horas
 1. Leitura do arquivo
    - Complexidade 1
    - TED: 10 minutos
