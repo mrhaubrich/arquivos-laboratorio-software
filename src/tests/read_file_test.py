@@ -17,5 +17,5 @@ class ReadFileTest(unittest.TestCase):
     def test_read_pagamentos_file(self):
         file = 'tests/pagamentos_file_test.txt'
         # must return the file content
-        self.assertEqual(read_file(file)[0], 'Hello World!')
+        self.assertEqual(read_file(file), 'Hello World!')
         
