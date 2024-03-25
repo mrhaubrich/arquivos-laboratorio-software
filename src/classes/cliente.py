@@ -1,3 +1,4 @@
+from typing import Union
 from classes.csv_file_data import CSVFileData
 from csv import reader
 
@@ -15,7 +16,7 @@ class Cliente(CSVFileData):
         self.nome = nome
 
     @staticmethod
-    def from_csv(file: str|None) -> list["Cliente"]:
+    def from_csv(file: Union[str, None]) -> list["Cliente"]:
         """
         Extrai os dados de clientes de um arquivo CSV.
         """

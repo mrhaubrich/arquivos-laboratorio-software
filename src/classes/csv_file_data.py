@@ -1,4 +1,5 @@
 import abc
+from typing import Union
 
 
 class CSVFileData(metaclass=abc.ABCMeta):
@@ -8,7 +9,7 @@ class CSVFileData(metaclass=abc.ABCMeta):
 
     @staticmethod
     @abc.abstractmethod
-    def from_csv(file: str) -> list["CSVFileData"]:
+    def from_csv(file: Union[str, None]) -> list["CSVFileData"]:
         """
         Método estático que cria uma instância da classe a partir de um arquivo CSV.
         """
