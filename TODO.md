@@ -46,11 +46,6 @@
    2. Dado que o ID do cliente existe, a funcionalidade deve retornar o cliente.
    3. Dado que o ID do cliente está vazio, a funcionalidade deve retornar um erro.
    4. Dado que o ID do cliente está nulo, a funcionalidade deve retornar um erro.
-6. Apresentar clientes e suas dívidas
-   1. Dado que os dados de clientes e pagamentos estão vazios, a funcionalidade deve printar uma mensagem dizendo que não há clientes e pagamentos.
-   2. Dado que os dados de clientes estão vazios e os pagamentos estão corretos, a funcionalidade deve printar uma mensagem dizendo que não há clientes.
-   3. Dado que os dados de clientes estão corretos e os pagamentos estão vazios, a funcionalidade deve printar uma mensagem dizendo que não há pagamentos.
-   4. Dado que os dados de clientes e pagamentos estão corretos, a funcionalidade deve printar os clientes e suas dívidas.
 
 # Sprint
 0. Implementar testes de aceitação

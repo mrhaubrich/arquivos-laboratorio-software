@@ -32,7 +32,7 @@ class Cliente(CSVFileData):
 
         for row in csv_reader:
             if len(row) != 6:
-                raise ValueError("Dados de clientes incorretos.")
+                raise ValueError(f"Dados de clientes incorretos. Linha: {row}")
             clientes.append(Cliente(int(row[0]), row[4]))
 
         return clientes
