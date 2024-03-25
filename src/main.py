@@ -14,9 +14,11 @@ def main():
 
     nao_pagos = Pagamento.filter_nao_pagos(pagamentos)
     dividas = Divida.get_dividas(clientes, nao_pagos)
+    dividas_agrupadas = Divida.group_dividas(dividas)
+    dividas_agrupadas = sorted(dividas_agrupadas, key=lambda divida: divida.pagamento.valor, reverse=True)
 
     presentation = Presentation()
-    presentation.print_dividas(dividas)
+    presentation.print_dividas(dividas_agrupadas)
     
 
 if __name__ == "__main__":
