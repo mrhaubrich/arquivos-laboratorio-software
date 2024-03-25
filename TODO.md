@@ -4,7 +4,9 @@
 2. extrair dados de cliente para a classe Cliente
 3. extrair dados de pagamentos para a classe Pagamento
 4. filtrar os lançamentos não pagos
-5. apresentar clientes e suas dívidas
+5. fltrar dívidas
+6. agrupar dívidas por cliente
+7. apresentar clientes e suas dívidas
 
 # Definição
 - Pagamentos marcados como false (f) são valores devidos pelo cliente;
@@ -20,7 +22,12 @@
    1. Usamos os dados de pagamentos já em memória para instanciar objetos que representam o pagamento.
 4. Filtrar os lançamentos não pagos
    1. Usamos os dados de pagamentos já em memória para filtrar os lançamentos não pagos.
-5. Apresentar clientes e suas dívidas
+5. Filtrar dívidas
+   1. Usamos os dados de lançamentos não pagos para filtrar as dívidas.
+   2. Relacionamos as dívidas com os clientes.
+6. Agrupar dívidas por cliente
+   1. Usamos os dados de dívidas já em memória para agrupar as dívidas por cliente.
+7. Apresentar clientes e suas dívidas
    1. Usamos os dados de clientes e pagamentos já em memória para apresentar clientes e suas dívidas.
 
 # Testes de aceitação
@@ -46,6 +53,15 @@
    2. Dado que o ID do cliente existe, a funcionalidade deve retornar o cliente.
    3. Dado que o ID do cliente está vazio, a funcionalidade deve retornar um erro.
    4. Dado que o ID do cliente está nulo, a funcionalidade deve retornar um erro.
+6. Filtrar dívidas
+   1. Dado que os dados de pagamentos estão vazios, a funcionalidade deve retornar uma lista vazia.
+   2. Dado que os dados de pagamentos estão nulos, a funcionalidade deve retornar um erro.
+   3. Dado que o cliente do pagamento não existe, a funcionalidade deve retornar um erro.
+   4. Dado que os dados de pagamentos estão corretos, a funcionalidade deve retornar uma lista de dívidas.
+7. Agrupar dívidas por cliente
+   1. Dado que os dados de dívidas estão vazios, a funcionalidade deve retornar uma lista vazia.
+   2. Dado que os dados de dívidas estão nulos, a funcionalidade deve retornar um erro.
+   3. Dado que os dados de dívidas estão corretos, a funcionalidade deve retornar uma lista de dívidas agrupadas por cliente.
 
 # Sprint
 0. Implementar testes de aceitação
