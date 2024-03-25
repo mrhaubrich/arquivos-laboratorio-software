@@ -34,3 +34,21 @@ class TestClienteExtraction(unittest.TestCase):
         clientes_csv = "0;0000;0;0;Cliente Sauna;\n1;;;;Cliente 1;\n2;;;;"
 
         self.assertRaises(ValueError, Cliente.from_csv, clientes_csv)
+
+
+    def test_extract_cliente_empty_data(self):
+        """
+        Dado que os dados de clientes estão vazios, então a aplicação deve retornar um erro.
+        """
+        clientes_csv = ""
+
+        self.assertRaises(ValueError, Cliente.from_csv, clientes_csv)
+
+    def test_extract_cliente_null_data(self):
+        """
+        Dado que os dados de clientes estão nulos, então a aplicação deve retornar um erro.
+        """
+        clientes_csv = None
+
+        self.assertRaises(ValueError, Cliente.from_csv, clientes_csv)
+

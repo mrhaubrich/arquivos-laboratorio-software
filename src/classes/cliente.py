@@ -15,11 +15,12 @@ class Cliente(CSVFileData):
         self.nome = nome
 
     @staticmethod
-    def from_csv(file: str) -> list["Cliente"]:
+    def from_csv(file: str|None) -> list["Cliente"]:
         """
         Extrai os dados de clientes de um arquivo CSV.
         """
-        # clientes_csv = "0;0000;0;0;Cliente Sauna;\n1;;;;Cliente 1;"
+        if file is None:
+            raise ValueError("Dados de clientes nulos.")
         csv_reader = reader(file.split("\n"), delimiter=";")
         csv_reader = list(csv_reader)
         
