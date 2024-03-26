@@ -79,6 +79,12 @@
 4. Filtrar os lançamentos não pagos
    - Complexidade 2
    - TED: 1 minuto
-5. Apresentar clientes e suas dívidas
+5. Filtrar dividas
+   - Complexidade 2
+   - TED: 1 minuto
+6. Agrupar dividas por cliente
+   - Complexidade 3
+   - TED: 5 minutos
+7. Apresentar clientes e suas dívidas
    - Complexidade 1
    - TED: 1 minuto
