@@ -65,26 +65,26 @@
 
 # Sprint
 0. Implementar testes de aceitação
-   - Complexidade 3
+   - Complexidade 40
    - TED: 2 horas
 1. Leitura do arquivo
-   - Complexidade 1
+   - Complexidade 0.5
    - TED: 10 minutos
 2. Extrair dados de cliente para classe
-   - Complexidade 5
+   - Complexidade 13
    - TED: 15 minutos
 3. Extrair dados de pagamentos para classe
-   - Complexidade 5
+   - Complexidade 13
    - TED: 15 minutos
 4. Filtrar os lançamentos não pagos
-   - Complexidade 2
+   - Complexidade 3
    - TED: 1 minuto
 5. Filtrar dividas
-   - Complexidade 2
+   - Complexidade 3
    - TED: 1 minuto
 6. Agrupar dividas por cliente
-   - Complexidade 3
+   - Complexidade 20
    - TED: 5 minutos
 7. Apresentar clientes e suas dívidas
-   - Complexidade 1
+   - Complexidade 3
    - TED: 1 minuto
