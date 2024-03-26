@@ -1,5 +1,7 @@
-from typing import Union
 from csv import reader
+from datetime import datetime
+from typing import Union
+
 from classes.csv_file_data import CSVFileData
 
 
@@ -9,11 +11,11 @@ class Pagamento(CSVFileData):
     """
 
     cliente: int
-    data: int
+    data: datetime
     valor: float
     pago: bool
 
-    def __init__(self, cliente: int, data: int, valor: float, pago: bool) -> None:
+    def __init__(self, cliente: int, data: datetime, valor: float, pago: bool) -> None:
         self.cliente = cliente
         self.data = data
         self.valor = valor
@@ -38,8 +40,13 @@ class Pagamento(CSVFileData):
         for row in csv_reader:
             if len(row) != 6:
                 raise ValueError("Dados de pagamentos incorretos.")
+            try:
+                data = datetime.strptime(row[1], "%d%m%Y")
+            except ValueError as e:
+                e.args = ("Data do pagamento incorreta.",)
+                raise e
             pagamentos.append(
-                Pagamento(int(row[0]), int(row[1]), float(row[3]), row[4] == "t")
+                Pagamento(int(row[0]), data, float(row[3]), row[4] == "t")
             )
 
         return pagamentos

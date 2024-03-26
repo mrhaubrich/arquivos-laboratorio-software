@@ -1,3 +1,4 @@
+from datetime import datetime
 import unittest
 from classes.divida import Divida
 from classes.cliente import Cliente
@@ -23,14 +24,14 @@ class TestFiltrarDividas(unittest.TestCase):
         """Dado que os dados de pagamentos estão nulos, a funcionalidade deve retornar um erro."""
         clientes = None
         pagamentos_nao_pagos = None
-        with self.assertRaises(Exception):
+        with self.assertRaises(ValueError):
             Divida.get_dividas(clientes, pagamentos_nao_pagos)
 
     def test_cliente_nao_existe(self):
         """Dado que o cliente do pagamento não existe, a funcionalidade deve retornar um erro."""
         clientes = []
         pagamentos_nao_pagos = [
-            Pagamento(54564654, 1654654, 100, False)
+            Pagamento(54564654, datetime.now(), 100, False)
         ]
         with self.assertRaises(Exception):
             Divida.get_dividas(clientes, pagamentos_nao_pagos)
@@ -41,14 +42,15 @@ class TestFiltrarDividas(unittest.TestCase):
             Cliente(54564654, "João Silva"),
             Cliente(1654654, "Maria Souza")
         ]
+        data = datetime.now()
         pagamentos_nao_pagos = [
-            Pagamento(54564654, 1654654, 100, False)
+            Pagamento(54564654, data, 100, False)
         ]
         dividas = Divida.get_dividas(clientes, pagamentos_nao_pagos)
         self.assertEqual(len(dividas), 1)
         self.assertEqual(dividas[0].cliente.id, 54564654)
         self.assertEqual(dividas[0].cliente.nome, "João Silva")
-        self.assertEqual(dividas[0].pagamento.data, 1654654)
+        self.assertEqual(dividas[0].pagamento.data, data)
         self.assertEqual(dividas[0].pagamento.valor, 100)
         self.assertEqual(dividas[0].pagamento.pago, False)
         

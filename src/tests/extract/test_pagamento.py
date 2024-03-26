@@ -1,5 +1,7 @@
 import unittest
 
+from datetime import datetime
+
 from classes.pagamento import Pagamento
 
 
@@ -9,6 +11,7 @@ class TestPagamentoExtraction(unittest.TestCase):
         2. Dado que os dados de pagamentos estão incorretos, então a aplicação deve retornar um erro.
         3. Dado que os dados de pagamentos estão vazios, então a aplicação deve retornar um erro.
         4. Dado que os dados de pagamentos estão nulos, então a aplicação deve retornar um erro.
+        5. Dado que a data do pagamento está incorreta, então a aplicação deve retornar um erro.
     """
 
     def test_extract_pagamento(self):
@@ -21,7 +24,7 @@ class TestPagamentoExtraction(unittest.TestCase):
         self.assertEqual(len(pagamentos), 1)
 
         self.assertEqual(pagamentos[0].cliente, 0)
-        self.assertEqual(pagamentos[0].data, 8022014)
+        self.assertEqual(pagamentos[0].data, datetime(2014, 2, 8))
         self.assertEqual(pagamentos[0].valor, 2)
         self.assertEqual(pagamentos[0].pago, True)
 
@@ -46,6 +49,14 @@ class TestPagamentoExtraction(unittest.TestCase):
         Dado que os dados de pagamentos estão nulos, então a aplicação deve retornar um erro.
         """
         pagamentos_csv = None
+
+        self.assertRaises(ValueError, Pagamento.from_csv, pagamentos_csv)
+
+    def test_extract_pagamento_incorrect_date(self):
+        """
+        Dado que a data do pagamento está incorreta, então a aplicação deve retornar um erro.
+        """
+        pagamentos_csv = "0;3122014;1;2;t;"
 
         self.assertRaises(ValueError, Pagamento.from_csv, pagamentos_csv)
 

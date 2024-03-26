@@ -44,6 +44,7 @@
    2. Dado que os dados de pagamentos estão incorretos, então a aplicação deve retornar um erro.
    3. Dado que os dados de pagamentos estão vazios, então a aplicação deve retornar um erro.
    4. Dado que os dados de pagamentos estão nulos, então a aplicação deve retornar um erro.
+   5. Dado que a data do pagamento está incorreta, então a aplicação deve retornar um erro.
 4. Filtrar os lançamentos não pagos
    1. Dado que os dados de pagamentos estão vazio, a funcionalidade deve retornar uma lista vazia.
    2. Dado que os dados de pagamentos estão nulos, a funcionalidade deve retornar um erro.

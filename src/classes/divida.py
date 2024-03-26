@@ -1,3 +1,4 @@
+from typing import Union
 from classes.cliente import Cliente
 from classes.pagamento import Pagamento
 
@@ -14,11 +15,15 @@ class Divida:
 
     @staticmethod
     def get_dividas(
-        clientes: list["Cliente"], pagamentos_nao_pagos: list[Pagamento]
+        clientes: Union[list["Cliente"], None],
+        pagamentos_nao_pagos: Union[list[Pagamento], None],
     ) -> list["Divida"]:
         """
         Retorna uma lista de dívidas.
         """
+        if clientes is None or pagamentos_nao_pagos is None:
+            raise ValueError("Dados de clientes ou pagamentos nulos.")
+
         dividas: list[Divida] = []
         for pagamento in pagamentos_nao_pagos:
             cliente = Cliente.get(pagamento.cliente, clientes)

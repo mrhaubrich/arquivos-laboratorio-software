@@ -1,3 +1,4 @@
+from datetime import datetime
 import unittest
 
 from classes.pagamento import Pagamento
@@ -32,10 +33,11 @@ class TestFilterLancamentosNaoPagos(unittest.TestCase):
         """
         Dado que os dados de pagamentos estão corretos, a funcionalidade deve retornar uma lista de pagamentos não pagos.
         """
+        date = datetime.now()
         pagamentos = [
-            Pagamento(0, 0, 0, False),
-            Pagamento(1, 1, 1, True),
-            Pagamento(2, 2, 2, False),
+            Pagamento(0, date, 0, False),
+            Pagamento(1, date, 1, True),
+            Pagamento(2, date, 2, False),
         ]
 
         lancamentos_nao_pagos = Pagamento.filter_nao_pagos(pagamentos)
@@ -43,11 +45,11 @@ class TestFilterLancamentosNaoPagos(unittest.TestCase):
         self.assertEqual(len(lancamentos_nao_pagos), 2)
 
         self.assertEqual(lancamentos_nao_pagos[0].cliente, 0)
-        self.assertEqual(lancamentos_nao_pagos[0].data, 0)
+        self.assertEqual(lancamentos_nao_pagos[0].data, date)
         self.assertEqual(lancamentos_nao_pagos[0].valor, 0)
         self.assertEqual(lancamentos_nao_pagos[0].pago, False)
 
         self.assertEqual(lancamentos_nao_pagos[1].cliente, 2)
-        self.assertEqual(lancamentos_nao_pagos[1].data, 2)
+        self.assertEqual(lancamentos_nao_pagos[1].data, date)
         self.assertEqual(lancamentos_nao_pagos[1].valor, 2)
         self.assertEqual(lancamentos_nao_pagos[1].pago, False)
