@@ -30,3 +30,14 @@ class Presentation:
             )
 
         self.console.print(table)
+
+    def print_exceptions(self, exceptions: list[str], exc_type: str):
+        """Print the exceptions that occurred during the execution of the program"""
+        # red
+        table = Table(title=f"{exc_type} Exceptions", show_header=True, header_style="bold magenta", style="bold red", title_style="bold red")
+        table.add_column("Exception")
+        for exception in exceptions:
+            table.add_row(exception)
+
+        self.console.print(table)
+

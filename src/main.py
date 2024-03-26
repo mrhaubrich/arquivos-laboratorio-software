@@ -1,6 +1,6 @@
 from classes.cliente import Cliente
-from classes.pagamento import Pagamento
 from classes.divida import Divida
+from classes.pagamento import Pagamento
 from presentation.presentation import Presentation
 from utils.read_file import read_file
 
@@ -9,8 +9,11 @@ def main():
     """Main function of the program."""
     clientes_file = read_file("assets/clientes.txt")
     pagamentos_file = read_file("assets/pagamentos.txt")
-    clientes = Cliente.from_csv(clientes_file)
-    pagamentos = Pagamento.from_csv(pagamentos_file)
+    Cliente.from_csv(clientes_file)
+    Pagamento.from_csv(pagamentos_file)
+
+    clientes = Cliente.objects
+    pagamentos = Pagamento.objects
 
     nao_pagos = Pagamento.filter_nao_pagos(pagamentos)
     dividas = Divida.get_dividas(clientes, nao_pagos)
@@ -20,6 +23,13 @@ def main():
     )
 
     presentation = Presentation()
+
+    if len(Cliente.exceptions) > 0:
+        presentation.print_exceptions(Cliente.exceptions, "Cliente")
+
+    if len(Pagamento.exceptions) > 0:
+        presentation.print_exceptions(Pagamento.exceptions, "Pagamento")
+
     presentation.print_dividas(dividas_agrupadas)
 
 

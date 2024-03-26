@@ -19,7 +19,8 @@ class TestPagamentoExtraction(unittest.TestCase):
         Dado que os dados de pagamentos estão corretos, então a aplicação deve instanciar objetos que representam o pagamento.
         """
         pagamentos_csv = "0;8022014;1;2;t;"
-        pagamentos = Pagamento.from_csv(pagamentos_csv)
+        Pagamento.from_csv(pagamentos_csv, raise_exceptions=True)
+        pagamentos = Pagamento.objects
 
         self.assertEqual(len(pagamentos), 1)
 
@@ -34,7 +35,7 @@ class TestPagamentoExtraction(unittest.TestCase):
         """
         pagamentos_csv = "0;8022014;1;2;t;\n1;8022014;1;2;t;\n2;8022014;1;2;"
 
-        self.assertRaises(ValueError, Pagamento.from_csv, pagamentos_csv)
+        self.assertRaises(ValueError, Pagamento.from_csv, pagamentos_csv, True)
 
     def test_extract_pagamento_empty_data(self):
         """
@@ -42,7 +43,7 @@ class TestPagamentoExtraction(unittest.TestCase):
         """
         pagamentos_csv = ""
 
-        self.assertRaises(ValueError, Pagamento.from_csv, pagamentos_csv)
+        self.assertRaises(ValueError, Pagamento.from_csv, pagamentos_csv, True)
 
     def test_extract_pagamento_null_data(self):
         """
@@ -50,7 +51,7 @@ class TestPagamentoExtraction(unittest.TestCase):
         """
         pagamentos_csv = None
 
-        self.assertRaises(ValueError, Pagamento.from_csv, pagamentos_csv)
+        self.assertRaises(ValueError, Pagamento.from_csv, pagamentos_csv, True)
 
     def test_extract_pagamento_incorrect_date(self):
         """
@@ -58,7 +59,7 @@ class TestPagamentoExtraction(unittest.TestCase):
         """
         pagamentos_csv = "0;3122014;1;2;t;"
 
-        self.assertRaises(ValueError, Pagamento.from_csv, pagamentos_csv)
+        self.assertRaises(ValueError, Pagamento.from_csv, pagamentos_csv, True)
 
         
 

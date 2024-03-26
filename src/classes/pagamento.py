@@ -14,6 +14,9 @@ class Pagamento(CSVFileData):
     data: datetime
     valor: float
     pago: bool
+    exceptions: list[str] = []
+
+    objects: list["Pagamento"] = []
 
     def __init__(self, cliente: int, data: datetime, valor: float, pago: bool) -> None:
         self.cliente = cliente
@@ -22,11 +25,10 @@ class Pagamento(CSVFileData):
         self.pago = pago
 
     @staticmethod
-    def from_csv(file: Union[str, None]) -> list["Pagamento"]:
+    def from_csv(file: Union[str, None], raise_exceptions: bool = False):
         """
         Extrai os dados de pagamentos de um arquivo CSV.
         """
-        # idCliente;data;inutil;valor;pago;
         if file is None:
             raise ValueError("Dados de pagamentos nulos.")
         csv_reader = reader(file.split("\n"), delimiter=";")
@@ -38,18 +40,26 @@ class Pagamento(CSVFileData):
         pagamentos: list[Pagamento] = []
 
         for row in csv_reader:
-            if len(row) != 6:
-                raise ValueError("Dados de pagamentos incorretos.")
+            if len(row) != 6 or not row[0].isdigit() or not row[3].replace(".", "").isdigit() or row[4] not in ["t", "f"]:
+                if raise_exceptions:
+                    raise ValueError(f"Dados de pagamentos incorretos. Linha: {row}")
+                else:
+                    Pagamento.exceptions.append(f"Dados de pagamentos incorretos. Linha: {row}")
+                    continue
             try:
                 data = datetime.strptime(row[1], "%d%m%Y")
             except ValueError as e:
-                e.args = ("Data do pagamento incorreta.",)
-                raise e
+                e.args = (f"Data do pagamento incorreta. Linha: {row}",)
+                if raise_exceptions:
+                    raise e
+                else:
+                    Pagamento.exceptions.append(f"Data do pagamento incorreta. Linha: {row}")
+                    continue
             pagamentos.append(
                 Pagamento(int(row[0]), data, float(row[3]), row[4] == "t")
             )
 
-        return pagamentos
+        Pagamento.objects = pagamentos
 
     @staticmethod
     def filter_nao_pagos(

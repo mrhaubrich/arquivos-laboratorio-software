@@ -1,6 +1,7 @@
-from typing import Union
-from classes.csv_file_data import CSVFileData
 from csv import reader
+from typing import Union
+
+from classes.csv_file_data import CSVFileData
 
 
 class Cliente(CSVFileData):
@@ -10,13 +11,16 @@ class Cliente(CSVFileData):
 
     id: int
     nome: str
+    exceptions: list[str] = []
+
+    objects: list["Cliente"] = []
 
     def __init__(self, cliente_id: int, nome: str) -> None:
         self.id = cliente_id
         self.nome = nome
 
     @staticmethod
-    def from_csv(file: Union[str, None]) -> list["Cliente"]:
+    def from_csv(file: Union[str, None], raise_exceptions: bool = False):
         """
         Extrai os dados de clientes de um arquivo CSV.
         """
@@ -31,11 +35,15 @@ class Cliente(CSVFileData):
         clientes: list[Cliente] = []
 
         for row in csv_reader:
-            if len(row) != 6:
-                raise ValueError(f"Dados de clientes incorretos. Linha: {row}")
+            if len(row) != 6 or not row[0].isdigit():
+                if raise_exceptions:
+                    raise ValueError(f"Dados de clientes incorretos. Linha: {row}")
+                else:
+                    Cliente.exceptions.append(f"Dados de clientes incorretos. Linha: {row}")
+                    continue
             clientes.append(Cliente(int(row[0]), row[4]))
 
-        return clientes
+        Cliente.objects = clientes
 
     @staticmethod
     def get(
