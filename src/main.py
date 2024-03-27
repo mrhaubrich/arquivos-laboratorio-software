@@ -1,5 +1,4 @@
 from classes.cliente import Cliente
-from classes.divida import Divida
 from classes.pagamento import Pagamento
 from presentation.presentation import Presentation
 from utils.read_file import read_file
@@ -16,10 +15,10 @@ def main():
     pagamentos = Pagamento.objects
 
     nao_pagos = Pagamento.filter_nao_pagos(pagamentos)
-    dividas = Divida.get_dividas(clientes, nao_pagos)
-    dividas_agrupadas = Divida.group_dividas(dividas)
+    dividas = Pagamento.get_dividas(clientes, nao_pagos)
+    dividas_agrupadas = Pagamento.group_dividas(dividas)
     dividas_agrupadas = sorted(
-        dividas_agrupadas, key=lambda divida: divida.pagamento.valor, reverse=True
+        dividas_agrupadas, key=lambda divida: divida.valor, reverse=True
     )
 
     presentation = Presentation()

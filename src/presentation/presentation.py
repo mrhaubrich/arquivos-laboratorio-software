@@ -1,7 +1,9 @@
 from rich.console import Console
 from rich.table import Table
 
-from classes.divida import Divida
+from classes.pagamento import Pagamento
+
+# from classes.divida import Divida
 
 
 class Presentation:
@@ -16,17 +18,17 @@ class Presentation:
         """Print a message to the console"""
         self.console.print(message)
 
-    def print_dividas(self, dividas: list[Divida]):
+    def print_dividas(self, pagamentos: list[Pagamento]):
         """Print the debts of the clients"""
         table = Table(title="Clientes Devedores")
         table.add_column("ID")
         table.add_column("Nome")
         table.add_column("Valor Devido")
-        for divida in dividas:
+        for pagamento in pagamentos:
             table.add_row(
-                str(divida.cliente.id),
-                divida.cliente.nome,
-                f"R$ {divida.pagamento.valor:.2f}",
+                str(pagamento.cliente.id),
+                pagamento.cliente.nome,
+                f"R$ {pagamento.valor:.2f}",
             )
 
         self.console.print(table)

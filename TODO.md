@@ -45,6 +45,7 @@
    3. Dado que os dados de pagamentos estão vazios, então a aplicação deve retornar um erro.
    4. Dado que os dados de pagamentos estão nulos, então a aplicação deve retornar um erro.
    5. Dado que a data do pagamento está incorreta, então a aplicação deve retornar um erro.
+   6. Dado que o cliente do pagamento não existe, então a aplicação deve retornar um erro.
 4. Filtrar os lançamentos não pagos
    1. Dado que os dados de pagamentos estão vazio, a funcionalidade deve retornar uma lista vazia.
    2. Dado que os dados de pagamentos estão nulos, a funcionalidade deve retornar um erro.
@@ -57,8 +58,7 @@
 6. Filtrar dívidas
    1. Dado que os dados de pagamentos estão vazios, a funcionalidade deve retornar uma lista vazia.
    2. Dado que os dados de pagamentos estão nulos, a funcionalidade deve retornar um erro.
-   3. Dado que o cliente do pagamento não existe, a funcionalidade deve retornar um erro.
-   4. Dado que os dados de pagamentos estão corretos, a funcionalidade deve retornar uma lista de dívidas.
+   3. Dado que os dados de pagamentos estão corretos, a funcionalidade deve retornar uma lista de dívidas.
 7. Agrupar dívidas por cliente
    1. Dado que os dados de dívidas estão vazios, a funcionalidade deve retornar uma lista vazia.
    2. Dado que os dados de dívidas estão nulos, a funcionalidade deve retornar um erro.

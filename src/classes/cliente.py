@@ -60,3 +60,6 @@ class Cliente(CSVFileData):
             if cliente.id == cliente_id:
                 return cliente
         raise ValueError("Cliente não encontrado.")
+
+    def __eq__(self, other: "Cliente") -> bool:
+        return self.id == other.id and self.nome == other.nome
