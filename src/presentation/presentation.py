@@ -18,9 +18,9 @@ class Presentation:
         """Print a message to the console"""
         self.console.print(message)
 
-    def print_dividas(self, pagamentos: list[Pagamento]):
+    def print_pagamentos(self, pagamentos: list[Pagamento], title: str):
         """Print the debts of the clients"""
-        table = Table(title="Clientes Devedores")
+        table = Table(title=title)
         table.add_column("ID")
         table.add_column("Nome")
         table.add_column("Valor Devido")

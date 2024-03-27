@@ -121,3 +121,15 @@ class Pagamento(CSVFileData):
                 dividas_agrupadas.append(divida)
 
         return dividas_agrupadas
+    
+    @staticmethod
+    def filter_pagos(
+        pagamentos: Union[list["Pagamento"], None]
+    ) -> list["Pagamento"]:
+        """
+        Filtra os pagamentos que foram pagos.
+        """
+        if pagamentos is None:
+            raise ValueError("Dados de pagamentos nulos.")
+
+        return [pagamento for pagamento in pagamentos if pagamento.pago]

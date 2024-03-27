@@ -29,7 +29,15 @@ def main():
     if len(Pagamento.exceptions) > 0:
         presentation.print_exceptions(Pagamento.exceptions, "Pagamento")
 
-    presentation.print_dividas(dividas_agrupadas)
+    presentation.print_pagamentos(dividas_agrupadas, "Dívidas")
+
+    pagos = Pagamento.filter_pagos(pagamentos)
+    pagamentos_agrupados = Pagamento.group_dividas(pagos)
+    pagamentos_agrupados = sorted(
+        pagamentos_agrupados, key=lambda pagamento: pagamento.valor, reverse=True
+    )
+
+    presentation.print_pagamentos(pagamentos_agrupados, "Pagamentos Quitados")
 
 
 if __name__ == "__main__":

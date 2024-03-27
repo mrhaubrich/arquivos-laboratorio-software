@@ -7,6 +7,7 @@
 5. fltrar dívidas
 6. agrupar dívidas por cliente
 7. apresentar clientes e suas dívidas
+8. Apresentar o valor já pago pelos clientes além do valor não pago
 
 # Definição
 - Pagamentos marcados como false (f) são valores devidos pelo cliente;
@@ -29,6 +30,8 @@
    1. Usamos os dados de dívidas já em memória para agrupar as dívidas por cliente.
 7. Apresentar clientes e suas dívidas
    1. Usamos os dados de clientes e pagamentos já em memória para apresentar clientes e suas dívidas.
+8. Apresentar o valor já pago pelos clientes além do valor não pago
+   1. Usamos os dados de clientes e pagamentos já em memória para apresentar o valor já pago pelos clientes além do valor não pago.
 
 # Testes de aceitação
 1. Leitura do arquivo:
@@ -63,6 +66,10 @@
    1. Dado que os dados de dívidas estão vazios, a funcionalidade deve retornar uma lista vazia.
    2. Dado que os dados de dívidas estão nulos, a funcionalidade deve retornar um erro.
    3. Dado que os dados de dívidas estão corretos, a funcionalidade deve retornar uma lista de dívidas agrupadas por cliente.
+8. Filtrar pagamentos já pagos além do valor não pago
+   1. Dado que os dados de pagamentos estão vazios, a funcionalidade deve retornar uma lista vazia.
+   2. Dado que os dados de pagamentos estão nulos, a funcionalidade deve retornar um erro.
+   3. Dado que os dados de pagamentos estão corretos, a funcionalidade deve retornar uma lista de pagamentos já pagos além do valor não pago.
 
 # Sprint
 0. Implementar testes de aceitação
@@ -89,3 +96,6 @@
 7. Apresentar clientes e suas dívidas
    - Complexidade 3
    - TED: 1 minuto
+8. Apresentar o valor já pago pelos clientes além do valor não pago
+   - Complexidade 3
+   - TED: 1 minuto e 30 segundos e 28 milissegundos
