@@ -14,30 +14,40 @@ def main():
     clientes = Cliente.objects
     pagamentos = Pagamento.objects
 
-    nao_pagos = Pagamento.filter_nao_pagos(pagamentos)
-    dividas = Pagamento.get_dividas(clientes, nao_pagos)
-    dividas_agrupadas = Pagamento.group_dividas(dividas)
-    dividas_agrupadas = sorted(
-        dividas_agrupadas, key=lambda divida: divida.valor, reverse=True
-    )
-
     presentation = Presentation()
 
     if len(Cliente.exceptions) > 0:
         presentation.print_exceptions(Cliente.exceptions, "Cliente")
+        presentation.pause()
 
     if len(Pagamento.exceptions) > 0:
         presentation.print_exceptions(Pagamento.exceptions, "Pagamento")
+        presentation.pause()
 
-    presentation.print_pagamentos(dividas_agrupadas, "Dívidas")
+    option = presentation.show_menu()
+    while option != "Sair":
+        handle_option(option, clientes, pagamentos, presentation)
+        option = presentation.show_menu()
 
-    pagos = Pagamento.filter_pagos(pagamentos)
-    pagamentos_agrupados = Pagamento.group_dividas(pagos)
-    pagamentos_agrupados = sorted(
-        pagamentos_agrupados, key=lambda pagamento: pagamento.valor, reverse=True
-    )
 
-    presentation.print_pagamentos(pagamentos_agrupados, "Pagamentos Quitados")
+def handle_option(option, clientes, pagamentos, presentation):
+    """Handle the option chosen by the user"""
+    if option == "Listar dívidas":
+        nao_pagos = Pagamento.filter_nao_pagos(pagamentos)
+        dividas = Pagamento.get_dividas(clientes, nao_pagos)
+        dividas_agrupadas = Pagamento.group_dividas(dividas)
+        presentation.list_dividas(dividas_agrupadas)
+        presentation.pause()
+    elif option == "Listar pagamentos":
+        pagos = Pagamento.filter_pagos(pagamentos)
+        pagamentos_agrupados = Pagamento.group_dividas(pagos)
+        presentation.list_dividas(pagamentos_agrupados)
+        presentation.pause()
+    elif option == "Sair":
+        return
+    else:
+        print(option)
+        presentation.print("Opção inválida")
 
 
 if __name__ == "__main__":
