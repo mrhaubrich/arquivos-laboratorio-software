@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import sys
 from pathlib import Path
+
 import environ
 
 env = environ.Env()
@@ -78,7 +80,12 @@ WSGI_APPLICATION = "projeto_django.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {"default": env.db("DATABASE_URL")}
+DATABASES = {
+    "default": env.db("DATABASE_URL"),
+}
+
+if "test" in sys.argv:
+    DATABASES["default"] = env.db("DATABASE_TEST_URL")
 
 
 # Password validation

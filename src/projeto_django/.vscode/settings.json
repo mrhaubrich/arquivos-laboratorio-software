@@ -1,0 +1,18 @@
+{
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "pylint.args": [
+        "--rcfile",
+        "${workspaceFolder}/pylintrc",
+        // "--load-plugins",
+        // "pylint_django",
+        // "--django-settings-module",
+        // "settings",
+    ],
+    "isort.args": [
+        "--profile",
+        "black",
+    ],
+    "git.openRepositoryInParentFolders": "always"
+}

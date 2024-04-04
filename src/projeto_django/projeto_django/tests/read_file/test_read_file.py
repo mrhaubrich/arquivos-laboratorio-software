@@ -1,9 +1,9 @@
-import unittest
+from unittest import TestCase
 
-from utils.read_file import read_file
+from lab_software.utils.read_file import read_file
 
 
-class ReadFileTest(unittest.TestCase):
+class ReadFileTest(TestCase):
     """
     1. Dado que o arquivo não existe, então a aplicação deve retornar um erro.
     2. Dado que o arquivo de clientes existe, então a aplicação deve retornar sucesso.
@@ -21,6 +21,6 @@ class ReadFileTest(unittest.TestCase):
         """
         2. Dado que o arquivo de clientes existe, então a aplicação deve retornar sucesso.
         """
-        file = "tests/read_file/pagamentos_file_test.txt"
+        file = "projeto_django/tests/read_file/pagamentos_file_test.txt"
         # must return the file content
         self.assertEqual(read_file(file), "Hello World!")

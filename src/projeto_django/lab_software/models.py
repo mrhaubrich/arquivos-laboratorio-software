@@ -30,6 +30,7 @@ class Cliente(models.Model, CSVFileData):
         if len(csv_reader) == 0:
             raise ValueError("Dados de clientes vazios ou nulos.")
 
+        clientes = []
         for row in csv_reader:
             if len(row) != 6 or not row[0].isdigit():
                 if raise_exceptions:
@@ -40,7 +41,11 @@ class Cliente(models.Model, CSVFileData):
                     )
                     continue
 
-            Cliente.objects.create(id=row[0], nome=row[1])
+            clientes.append(Cliente(id=int(row[0]), nome=row[4]))
+
+        print(f"Inserindo {len(clientes)} clientes")
+
+        Cliente.objects.bulk_create(clientes, batch_size=200)
 
     @staticmethod
     def get(
@@ -58,9 +63,6 @@ class Cliente(models.Model, CSVFileData):
                 return cliente
         raise ValueError("Cliente não encontrado.")
 
-    def __eq__(self, other: "Cliente") -> bool:
-        return self.id == other.id and self.nome == other.nome
-
     def __str__(self):
         return str(self.nome)
 
@@ -70,16 +72,28 @@ class PagamentoManager(models.Manager):
     Manager para a classe Pagamento.
     """
 
-    def filter_nao_pagos(self):
-        """
-        Filtra os pagamentos que não foram pagos.
-        """
-        return super().get_queryset().filter(pago=False)
-
     def get_dividas(self):
         """
         Retorna uma lista de dívidas.
         """
+        clientes = Cliente.objects.all()
+
+        dividas = {}
+        # sum all debts for each client (if 0, then shouldn't be in the list)
+        for cliente in clientes:
+            divida = sum(
+                pagamento.valor
+                for pagamento in self.filter(cliente=cliente, pago=False)
+            )
+            for pagamento in self.filter(cliente=cliente, pago=False):
+                if divida > 0:
+                    dividas[cliente.id] = Pagamento(
+                        cliente=cliente, data=, valor=divida, pago=False
+                    )
+                
+
+
+        return dividas
 
 
 class Pagamento(models.Model):
@@ -101,7 +115,7 @@ class Pagamento(models.Model):
         """
         Extrai os dados de pagamentos de um arquivo CSV.
         """
-        if file is None:
+        if file is None or file == "":
             raise ValueError("Dados de pagamentos nulos.")
 
         csv_reader = reader(file.split("\n"), delimiter=";")
@@ -110,7 +124,7 @@ class Pagamento(models.Model):
         if len(csv_reader) == 0:
             raise ValueError("Dados de pagamentos vazios ou nulos.")
 
-        cliente_ids = [row[2] for row in csv_reader]
+        cliente_ids = [row[0] for row in csv_reader]
 
         # Bulk query to check existence of Cliente objects
         existing_clientes = {
@@ -146,11 +160,14 @@ class Pagamento(models.Model):
                     )
                     continue
 
-            cliente_id = int(row[2])
+            cliente_id = int(row[0])
             cliente = existing_clientes.get(cliente_id)
+
             if not cliente:
                 if raise_exceptions:
-                    raise ValueError(f"Cliente do pagamento incorreto. Linha: {row}")
+                    raise ValueError(
+                        f"Cliente do pagamento incorreto. ID: {cliente_id} Linha: {row}"
+                    )
                 else:
                     Pagamento.exceptions.append(
                         f"Cliente do pagamento incorreto. Linha: {row}"
@@ -166,22 +183,9 @@ class Pagamento(models.Model):
                 )
             )
 
-        print(f'Inserindo {len(pagamentos)} pagamentos')
+        print(f"Inserindo {len(pagamentos)} pagamentos")
 
         Pagamento.objects.bulk_create(pagamentos, batch_size=200)
-
-    @staticmethod
-    def filter_nao_pagos() -> list["Pagamento"]:
-        """
-        Filtra os pagamentos que não foram pagos.
-        """
-        return list(Pagamento.objects.filter(pago=False))
-
-    @staticmethod
-    def get_dividas() -> list["Pagamento"]:
-        """
-        Retorna uma lista de dívidas.
-        """
 
     def __str__(self):
         return f"{self.cliente} - {self.data} - {self.valor} - {self.pago}"

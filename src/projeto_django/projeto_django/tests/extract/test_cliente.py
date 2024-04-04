@@ -1,9 +1,9 @@
 # Extrair dados de cliente para classe
-import unittest
+from django.test import TestCase
 
-from classes.cliente import Cliente
+from lab_software.models import Cliente
 
-class TestClienteExtraction(unittest.TestCase):
+class TestClienteExtraction(TestCase):
     """
         1. Dado que os dados de clientes estão corretos, então a aplicação deve instanciar objetos que representam o cliente.
         2. Dado que os dados de clientes estão incorretos, então a aplicação deve retornar um erro.
@@ -18,15 +18,15 @@ class TestClienteExtraction(unittest.TestCase):
         clientes_csv = "0;0000;0;0;Cliente Sauna;\n1;;;;Cliente 1;"
 
         Cliente.from_csv(clientes_csv, raise_exceptions=True)
-        clientes = Cliente.objects
+        clientes = Cliente.objects.all()
 
-        self.assertEqual(len(clientes), 2)
+        self.assertEqual(clientes.count(), 2)
 
-        self.assertEqual(clientes[0].id, 0)
-        self.assertEqual(clientes[0].nome, "Cliente Sauna")
+        self.assertEqual(clientes.get(id=0).id, 0)
+        self.assertEqual(clientes.get(id=0).nome, "Cliente Sauna")
 
-        self.assertEqual(clientes[1].id, 1)
-        self.assertEqual(clientes[1].nome, "Cliente 1")
+        self.assertEqual(clientes.get(id=1).id, 1)
+        self.assertEqual(clientes.get(id=1).nome, "Cliente 1")
 
     def test_extract_cliente_incorrect_data(self):
         """
