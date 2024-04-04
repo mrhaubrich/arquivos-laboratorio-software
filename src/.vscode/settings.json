@@ -1,0 +1,4 @@
+{
+    "git.openRepositoryInParentFolders": "always",
+    "pylint.cwd": "${workspaceFolder}/projeto_django"
+}
