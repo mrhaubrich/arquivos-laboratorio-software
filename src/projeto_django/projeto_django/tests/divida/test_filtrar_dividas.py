@@ -14,17 +14,8 @@ class TestFiltrarDividas(TestCase):
 
     def test_dados_vazios(self):
         """Dado que os dados de pagamentos estão vazios, a funcionalidade deve retornar uma lista vazia."""
-        clientes = []
-        pagamentos_nao_pagos = []
         dividas = Pagamento.objects.get_dividas()
         self.assertEqual(dividas, {})
-
-    def test_dados_nulos(self):
-        """Dado que os dados de pagamentos estão nulos, a funcionalidade deve retornar um erro."""
-        clientes = None
-        pagamentos_nao_pagos = None
-        with self.assertRaises(ValueError):
-            Pagamento.objects.get_dividas()
 
     def test_dados_corretos(self):
         """Dado que os dados de pagamentos estão corretos, a funcionalidade deve retornar uma lista de dívidas."""
@@ -34,12 +25,19 @@ class TestFiltrarDividas(TestCase):
         data = date.today()
         pagamento = Pagamento(cliente_id=54564654, data=data, valor=100, pago=False)
         pagamento.save()
+        pagamento = Pagamento(cliente_id=1654654, data=data, valor=50, pago=False)
+        pagamento.save()
 
         dividas = list(Pagamento.objects.get_dividas().values())
-        print(dividas)
-        self.assertEqual(len(dividas), 1)
+        self.assertEqual(len(dividas), 2)
         self.assertEqual(dividas[0].cliente.id, 54564654)
         self.assertEqual(dividas[0].cliente.nome, "João Silva")
         self.assertEqual(dividas[0].data, data)
         self.assertEqual(dividas[0].valor, 100)
         self.assertEqual(dividas[0].pago, False)
+
+        self.assertEqual(dividas[1].cliente.id, 1654654)
+        self.assertEqual(dividas[1].cliente.nome, "Maria Souza")
+        self.assertEqual(dividas[1].data, data)
+        self.assertEqual(dividas[1].valor, 50)
+        self.assertEqual(dividas[1].pago, False)

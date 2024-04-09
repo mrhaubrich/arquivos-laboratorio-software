@@ -88,10 +88,8 @@ class PagamentoManager(models.Manager):
             for pagamento in self.filter(cliente=cliente, pago=False):
                 if divida > 0:
                     dividas[cliente.id] = Pagamento(
-                        cliente=cliente, data=, valor=divida, pago=False
+                        cliente=cliente, data=pagamento.data, valor=divida, pago=False
                     )
-                
-
 
         return dividas
 
