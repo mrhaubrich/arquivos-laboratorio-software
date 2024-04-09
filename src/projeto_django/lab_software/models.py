@@ -92,6 +92,18 @@ class PagamentoManager(models.Manager):
                     )
 
         return dividas
+    
+    def filter_nao_pagos(self):
+        """
+        Filtra os pagamentos não pagos.
+        """
+        return self.filter(pago=False)
+    
+    def filter_quitados(self):
+        """
+        Filtra os pagamentos quitados.
+        """
+        return self.filter(pago=True)
 
 
 class Pagamento(models.Model):

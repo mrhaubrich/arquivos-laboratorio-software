@@ -1,8 +1,8 @@
+from datetime import date
+
 from django.test import TestCase
-from datetime import date, datetime
 
 from lab_software.models import Cliente, Pagamento
-
 
 
 class TestFiltrarDividas(TestCase):
