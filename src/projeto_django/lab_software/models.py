@@ -1,6 +1,7 @@
 from csv import reader
 from datetime import datetime
 from typing import Union
+
 from django.db import models
 
 from lab_software.classes.csv_file_data import CSVFileData
@@ -92,13 +93,13 @@ class PagamentoManager(models.Manager):
                     )
 
         return dividas
-    
+
     def filter_nao_pagos(self):
         """
         Filtra os pagamentos não pagos.
         """
         return self.filter(pago=False)
-    
+
     def filter_quitados(self):
         """
         Filtra os pagamentos quitados.
@@ -199,3 +200,10 @@ class Pagamento(models.Model):
 
     def __str__(self):
         return f"{self.cliente} - {self.data} - {self.valor} - {self.pago}"
+
+
+class Divida(Pagamento):
+    class Meta:
+        proxy = True
+        verbose_name = "Dívida"
+        verbose_name_plural = "Dívidas"
