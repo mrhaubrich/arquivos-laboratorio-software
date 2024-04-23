@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "lab_software.apps.LabSoftwareConfig",
+    "behave_django",
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ DATABASES = {
     "default": env.db("DATABASE_URL"),
 }
 
-if "test" in sys.argv:
+if "test" in sys.argv or "behave" in sys.argv:
     DATABASES["default"] = env.db("DATABASE_TEST_URL")
 
 
